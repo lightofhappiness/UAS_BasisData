@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LaporanKesehatan;
+use App\Models\LaporanKesehatanModel;
 use Illuminate\Http\Request;
 
 class LaporanKesehatanController extends Controller
@@ -22,7 +22,7 @@ class LaporanKesehatanController extends Controller
             'deskripsi' => 'required|string|max:255',
         ]);
 
-        LaporanKesehatan::create([
+        LaporanKesehatanModel::create([
             'warga_id' => $request->warga_id,
             'tanggal_laporan' => $request->tanggal_laporan,
             'deskripsi' => $request->deskripsi,
@@ -34,14 +34,14 @@ class LaporanKesehatanController extends Controller
     // Menampilkan daftar laporan kesehatan
     public function index()
     {
-        $laporanKesehatan = LaporanKesehatan::all();
+        $laporanKesehatan = LaporanKesehatanModel::all();
         return view('laporan_kesehatan.index', compact('laporanKesehatan'));
     }
 
     // Menampilkan detail laporan kesehatan
     public function show($id)
     {
-        $laporan = LaporanKesehatan::findOrFail($id);
+        $laporan = LaporanKesehatanModel::findOrFail($id);
         return view('laporan_kesehatan.show', compact('laporan'));
     }
 }

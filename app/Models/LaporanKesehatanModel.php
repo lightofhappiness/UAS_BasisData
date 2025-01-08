@@ -20,6 +20,6 @@ class LaporanKesehatanModel extends Model
     // Relasi kebalikannya: setiap laporan kesehatan dimiliki oleh satu warga
     public function warga()
     {
-        return $this->belongsTo(Warga::class); // Menghubungkan dengan warga
+        return $this->belongsTo(WargaModel::class); // Menghubungkan dengan warga
     }
 }

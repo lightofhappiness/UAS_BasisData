@@ -29,5 +29,6 @@
             @endforeach
         </ul>
     @endif
+    <p>dont have account? <a href="{{ route('register') }}">Register dulu here</a></p>
 </body>
 </html>

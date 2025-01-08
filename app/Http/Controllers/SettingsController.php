@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 
+
 class SettingsController extends Controller
 {
     // Menampilkan halaman pengaturan

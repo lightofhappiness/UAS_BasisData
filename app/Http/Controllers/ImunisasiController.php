@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Imunisasi;
-use App\Models\Warga;
+use App\Models\ImunisasiModel;
+use App\Models\WargaModel;
 use Illuminate\Http\Request;
 
 class ImunisasiController extends Controller
@@ -23,9 +23,9 @@ class ImunisasiController extends Controller
             'tanggal_imunisasi' => 'required|date',
         ]);
 
-        $warga = Warga::findOrFail($wargaId);
+        $warga = WargaModel::findOrFail($wargaId);
         
-        Imunisasi::create([
+        ImunisasiModel::create([
             'warga_id' => $warga->id,
             'jenis_imunisasi' => $request->jenis_imunisasi,
             'tanggal_imunisasi' => $request->tanggal_imunisasi,
@@ -37,7 +37,7 @@ class ImunisasiController extends Controller
     // Menampilkan daftar imunisasi untuk warga tertentu
     public function show($wargaId)
     {
-        $warga = Warga::findOrFail($wargaId);
+        $warga = WargaModel::findOrFail($wargaId);
         $imunisasi = $warga->imunisasies; // Relasi antara warga dan imunisasi
         return view('imunisasi.show', compact('warga', 'imunisasi'));
     }

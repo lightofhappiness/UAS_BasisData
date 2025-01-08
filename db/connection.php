@@ -2,7 +2,7 @@
 require 'vendor/autoload.php'; // Composer autoload
 
 try {
-    $client = new MongoDB\Client("mongodb+srv://devianz:ESiCixbvhJ71Gkwh@basdatnr9.qni60.mongodb.net/");
+    $client = new MongoDB\Client("mongodb://localhost:27017/");
     $database = $client->posyandu; // Nama database
     $collection = $database->warga;  // Nama koleksi
 } catch (Exception $e) {

@@ -9,6 +9,8 @@ class WargaModel extends Model
 {
     use HasFactory;
 
+    protected $connection = 'mongodb'; // Set koneksi ke MongoDB
+
     // Menentukan tabel yang digunakan oleh model ini
     protected $table = 'warga';  // Nama tabel (jika berbeda dengan nama model, bisa diubah)
 
@@ -29,3 +31,6 @@ class WargaModel extends Model
         return $this->hasMany(LaporanKesehatanModel::class);  // Seorang warga bisa memiliki banyak laporan kesehatan
     }
 }
+
+
+    

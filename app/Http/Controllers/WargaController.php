@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Warga;
+use App\Models\WargaModel;
 
 class WargaController extends Controller
 {
+    
     public function create()
     {
         return view('warga.create');
@@ -21,7 +22,7 @@ class WargaController extends Controller
             'alamat' => 'nullable|string',
         ]);
 
-        Warga::create($request->all());
+        WargaModel::create($request->all());
 
         return redirect()->back()->with('success', 'Warga berhasil didaftarkan!');
     }
@@ -29,7 +30,7 @@ class WargaController extends Controller
     public function show($id)
 {
     // Misalnya, ambil data warga berdasarkan ID dari database
-    $warga = Warga::find($id);
+    $warga = WargaModel::find($id);
 
     // Jika data ditemukan, tampilkan detail
     if ($warga) {
