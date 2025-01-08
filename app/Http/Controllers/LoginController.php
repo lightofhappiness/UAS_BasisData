@@ -10,7 +10,7 @@ class LoginController extends Controller
     // Menampilkan halaman login
     public function showLoginForm()
     {
-        return view('auth.login');
+        return view('login');
     }
 
     // Menangani login
@@ -34,10 +34,5 @@ class LoginController extends Controller
         ]);
     }
 
-    // Menangani logout
-    public function logout()
-    {
-        Auth::logout();
-        return redirect()->route('login');
-    }
+   
 }

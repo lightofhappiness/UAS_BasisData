@@ -25,4 +25,19 @@ class WargaController extends Controller
 
         return redirect()->back()->with('success', 'Warga berhasil didaftarkan!');
     }
+    
+    public function show($id)
+{
+    // Misalnya, ambil data warga berdasarkan ID dari database
+    $warga = Warga::find($id);
+
+    // Jika data ditemukan, tampilkan detail
+    if ($warga) {
+        return view('warga.show', ['warga' => $warga]);
+    }
+
+    // Jika tidak ditemukan, kembalikan 404
+    abort(404, 'Warga tidak ditemukan');
+}
+
 }

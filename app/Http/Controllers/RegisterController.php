@@ -12,7 +12,7 @@ class RegisterController extends Controller
     // Menampilkan halaman register
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        return view('register');
     }
 
     // Menangani registrasi pengguna
