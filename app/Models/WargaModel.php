@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use MongoDB\Client as MongoClient;
 
 class WargaModel extends Model
 {
@@ -11,6 +12,7 @@ class WargaModel extends Model
 
     protected $connection = 'mongodb'; // Set koneksi ke MongoDB
 
+    
     // Menentukan tabel yang digunakan oleh model ini
     protected $table = 'warga';  // Nama tabel (jika berbeda dengan nama model, bisa diubah)
 

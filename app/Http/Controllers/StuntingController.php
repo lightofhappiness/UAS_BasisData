@@ -30,7 +30,10 @@ class StuntingController extends Controller
             'usia' => 'required|integer',
         ]);
 
-        $statusStunting = $this->calculateStuntingStatus($request->tinggi_badan, $request->berat_badan, $request->usia);
+        $statusStunting = $this->analisisStunting(
+            $validated['tinggi_badan'].
+            $validated['berat_badan'],
+        );
 
         StuntingModel::create([
             'warga_id' => $request->warga_id,
@@ -44,16 +47,53 @@ class StuntingController extends Controller
     }
 
     // Fungsi untuk menghitung status stunting
-    private function calculateStuntingStatus($tinggiBadan, $beratBadan, $usia)
+    private function analisisStunting($data)
     {
-        // Lakukan perhitungan Z-score atau bandingkan dengan standar WHO
-        // Ini adalah contoh sederhana, sebaiknya sesuaikan dengan data medis
-        if ($tinggiBadan < 85) {
-            return 'Stunted';
-        } elseif ($tinggiBadan >= 85 && $tinggiBadan <= 100) {
-            return 'Normal';
-        } else {
-            return 'Severe Stunting';
+        // Contoh logika sederhana: Tinggi badan ideal = usia (bulan) × 2,5 cm
+        $tinggiIdeal = $data['usia_bulan'] * 2.5; 
+        
+        // Bandingkan tinggi badan anak dengan tinggi ideal
+        if ($data['tinggi_badan'] < $tinggiIdeal) {
+            return 'Stunting'; // Jika lebih rendah dari tinggi ideal
         }
+        return 'Normal'; // Jika sesuai atau lebih tinggi dari tinggi ideal
     }
+    
+
+    // Menampilkan daftar data stunting
+
+
+// Menampilkan detail data stunting tertentu
+public function show($id)
+{
+    $stunting = StuntingModel::with('warga')->findOrFail($id);
+    return view('stunting.show', compact('stunting'));
+}
+
+public function update(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'tinggi_badan' => 'required|numeric|min:10',
+        'berat_badan' => 'required|numeric|min:1',
+        'usia_bulan' => 'required|integer|min:1',
+        'hasil' => 'nullable|string|max:255',
+    ]);
+
+    $validatedData['hasil'] = $this->analisisStunting($validatedData);
+
+    $stunting = StuntingModel::findOrFail($id);
+    $stunting->update($validatedData);
+
+    return redirect()->route('stunting.index')->with('success', 'Data stunting berhasil diperbarui.');
+}
+
+public function destroy($id)
+{
+    $stunting = StuntingModel::findOrFail($id);
+    $stunting->delete();
+
+    return redirect()->route('stunting.index')->with('success', 'Data stunting berhasil dihapus.');
+}
+
+
 }

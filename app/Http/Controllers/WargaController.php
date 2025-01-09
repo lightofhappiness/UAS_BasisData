@@ -26,6 +26,13 @@ class WargaController extends Controller
 
         return redirect()->back()->with('success', 'Warga berhasil didaftarkan!');
     }
+
+    public function index()
+{
+    $wargas = Warga::all(); // Mengambil semua data warga
+    return view('warga.index', compact('warga')); // Tampilkan di view
+}
+
     
     public function show($id)
 {
@@ -40,5 +47,36 @@ class WargaController extends Controller
     // Jika tidak ditemukan, kembalikan 404
     abort(404, 'Warga tidak ditemukan');
 }
+
+
+public function edit($id)
+{
+    $warga = WargaModel::findOrfail($id);
+    return view('warga.edit', compact('warga'));
+}
+
+public function update(Request $request, $id)
+{
+    $warga = WargaModel::findOrfail($id);
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'age' => 'required|integer',
+    ]);
+
+    $warga->update([
+        'name' => $request->name,
+        'age' => $request->age,
+    ]);
+
+    return redirect()->route('warga.index'); // Kembali ke daftar warga
+}
+public function destroy ($id) {
+    $warga = WargaModel::findOrFail($id);
+    $warga->delete();
+
+    return redirect()->route('warga.index')->with('success', 'Data Warga berhasil dihapus.');
+}
+
 
 }

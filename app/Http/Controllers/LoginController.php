@@ -25,7 +25,7 @@ class LoginController extends Controller
         // Mencoba login dengan kredensial yang diberikan
         if (Auth::attempt($request->only('email', 'password'))) {
             // Jika login berhasil, redirect ke halaman dashboard
-            return redirect()->route('dashboard');
+            return redirect()->route('warga');
         }
 
         // Jika login gagal, kembali ke halaman login dengan pesan error

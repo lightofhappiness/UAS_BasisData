@@ -44,4 +44,7 @@ class LaporanKesehatanController extends Controller
         $laporan = LaporanKesehatanModel::findOrFail($id);
         return view('laporan_kesehatan.show', compact('laporan'));
     }
+
+    public function update(Request $request, $id) { } // Update
+public function destroy($id) {} // Delete
 }

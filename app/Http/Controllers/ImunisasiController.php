@@ -34,6 +34,11 @@ class ImunisasiController extends Controller
         return redirect()->route('warga.show', $warga->id)->with('success', 'Imunisasi berhasil dicatat!');
     }
 
+    public function index()
+{
+    $imunisasi = ImunisasiModel::with('warga')->get(); // Mengambil semua data dengan relasi warga
+    return view('imunisasi.index', compact('imunisasi'));
+}
     // Menampilkan daftar imunisasi untuk warga tertentu
     public function show($wargaId)
     {
@@ -41,4 +46,28 @@ class ImunisasiController extends Controller
         $imunisasi = $warga->imunisasies; // Relasi antara warga dan imunisasi
         return view('imunisasi.show', compact('warga', 'imunisasi'));
     }
+
+    public function update(Request $request, $id)
+{
+    $validatedData = $request->validate([
+        'jenis_imunisasi' => 'required|string|max:255',
+        'tanggal_pemberian' => 'required|date',
+        'dosis' => 'required|string|max:50',
+        'petugas' => 'nullable|string|max:255',
+    ]);
+
+    $imunisasi = ImunisasiModel::findOrFail($id);
+    $imunisasi->update($validatedData);
+
+    return redirect()->route('imunisasi.index')->with('success', 'Data imunisasi berhasil diperbarui.');
+}
+// Update
+public function destroy($id)
+{
+    $imunisasi = ImunisasiModel::findOrFail($id);
+    $imunisasi->delete();
+
+    return redirect()->route('imunisasi.index')->with('success', 'Data imunisasi berhasil dihapus.');
+}
+
 }

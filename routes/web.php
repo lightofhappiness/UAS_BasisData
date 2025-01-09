@@ -2,7 +2,7 @@
 use illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
-#use App\Http\Controllers\WargaController;
+use App\Http\Controllers\WargaController;
 #use App\Http\Controllers\SettingsController;
 #use App\Http\Controllers\LaporanKesehatanController;
 #use App\Http\Controllers\ProfilController;
@@ -25,3 +25,13 @@ Route::get('register', [RegisterController::class, 'showRegistrationForm'])->nam
 
 // Proses register
 Route::post('register', [RegisterController::class, 'register']);
+Route::middleware('auth')->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::middleware('auth')->post('/warga', [WargaController::class, 'store'])->name('warga.store');
+Route::middleware('auth')->get('/warga/{id}/edit', [WargaController::class, 'edit'])->name('warga.edit');
+Route::middleware('auth')->put('/warga/{id}', [WargaController::class, 'update'])->name('warga.update');
+Route::middleware('auth')->get('/warga', [WargaController::class, 'index'])->name('warga.index');
+Route::middleware('auth')->get('/warga/{id}', [WargaController::class, 'show'])->name('warga.show');
+Route::middleware('auth')->delete('/warga/{id}', [WargaController::class, 'destroy'])->name('warga.destroy');
